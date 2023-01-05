@@ -1,4 +1,4 @@
-class Solution {
+/*class Solution {
     public List<List<Integer>> combinationSum3(int k, int n) {
       
         List<List<Integer>> l=new ArrayList<>();
@@ -24,6 +24,37 @@ class Solution {
                         la.add(i);
                         par(i+1,sum-i,la,l,k-1);
                         la.remove(la.size()-1);
+                   
+           
+        }
+    }
+    
+}
+*/
+class Solution {
+    public List<List<Integer>> combinationSum3(int k, int n) {
+      
+        List<List<Integer>> res = new ArrayList<>();
+        LinkedList<Integer> pres = new LinkedList<Integer>();
+        boolean[] arr = new boolean[9];
+     
+        this.backtrack(0,n,pres,res,k) ;
+        return res;
+    }
+    
+    protected void backtrack(int next_start,int remain,LinkedList<Integer> pres,List<List<Integer>> res,int k) {
+        if (remain == 0 && pres.size() == k) {
+            res.add(new ArrayList<>(pres));
+            return;
+        }
+        else if(remain < 0 || pres.size() == k){
+            return ;
+        }
+        for (int i = next_start; i < 9 ;i++)
+        {   
+                        pres.add(i+1);
+                        backtrack(i+1,remain-i-1,pres,res,k);
+                        pres.removeLast() ;
                    
            
         }
