@@ -1,0 +1,36 @@
+class Solution {
+    public boolean isRectangleCover(int[][] rectangles) {
+        if (rectangles.length == 0 || rectangles[0].length == 0) return false;
+
+        int a1 = Integer.MAX_VALUE;
+        int a2 = Integer.MIN_VALUE;
+        int b1 = Integer.MAX_VALUE;
+        int b2 = Integer.MIN_VALUE;
+        
+        HashSet<String> set = new HashSet<String>();
+        int area = 0;
+        
+        for (int[] rect : rectangles) {
+            a1 = Math.min(rect[0], a1);
+            b1 = Math.min(rect[1], b1);
+            a2 = Math.max(rect[2], a2);
+            b2 = Math.max(rect[3], b2);
+            
+            area += (rect[2] - rect[0]) * (rect[3] - rect[1]);
+            
+            String str1 = rect[0] + " " + rect[1];
+            String str2 = rect[0] + " " + rect[3];
+            String str3 = rect[2] + " " + rect[3];
+            String str4 = rect[2] + " " + rect[1];
+            
+            if (!set.add(str1)) set.remove(str1);
+            if (!set.add(str2)) set.remove(str2);
+            if (!set.add(str3)) set.remove(str3);
+            if (!set.add(str4)) set.remove(str4);
+        }
+        
+        if (!set.contains(a1 + " " + b1) || !set.contains(a1 + " " + b2) || !set.contains(a2 + " " + b1) || !set.contains(a2 + " " + b2) || set.size() != 4) return false;
+        
+        return area == (a2-a1) * (b2-b1);
+    }
+}

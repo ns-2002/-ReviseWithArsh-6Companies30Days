@@ -1,0 +1,22 @@
+class Solution {
+    public boolean canFinish(int n, int[][] prerequisites) {
+        ArrayList<Integer>[] arr = new ArrayList[n];
+        int[] deg = new int[n];
+        ArrayList<Integer> bfs = new ArrayList();
+        for (int i = 0; i < n; ++i) 
+            arr[i] = new ArrayList<Integer>();
+        for (int[] e : prerequisites) {
+            arr[e[1]].add(e[0]);
+            deg[e[0]]++;
+        }
+        for (int i = 0; i < n; ++i) {
+            if (deg[i] == 0) bfs.add(i);
+        }
+        for (int i = 0; i < bfs.size(); ++i){
+            for (int j: arr[bfs.get(i)]){
+                if (--deg[j] == 0) bfs.add(j);
+            }
+        }
+        return bfs.size() == n;
+    }
+}
